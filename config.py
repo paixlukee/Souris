@@ -1,2 +1,4 @@
 bot_token= ''
-api_token=''
+server_ip=''
+server_pass=''
+sql_db=''
