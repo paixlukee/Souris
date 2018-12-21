@@ -14,6 +14,8 @@ import sys
 import json
 import config
 
+extensions = ['modules.info']
+
 class Souris(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(command_prefix='s;')
@@ -38,6 +40,7 @@ class Souris(commands.AutoShardedBot):
         print('\n------')
         print(f'[UPDATE] Logged in as: {self.user.name]')
         print(f"[AWAITING] Run 's;load all'")
+        print("\n------\n\n")
         self.loop.create_task(self.status_task())
 
     async def on_guild_join(self, guild):
@@ -64,6 +67,38 @@ class Souris(commands.AutoShardedBot):
     async def ping(self, ctx):
         """useless command"""
         await ctx.send("Pong! Have a mice day!")
+                                        
+    @commands.command(hidden=True)
+    @commands.is_owner()
+    async def load(self, ctx, extension):
+        try:
+            if extension == 'all':
+                for extension in extensions:
+                    not_loaded = []
+                    loaded = []
+                    try:
+                        self.load_extension(extension)
+                        loaded.append(extension)
+                    except Exception as error:
+                        print('\n\nMODULE ERROR: {} was not loaded due to an error: \n-- [{}] --\n\n'.format(extension, error))
+                        not_loaded.append(f'{extension} ({error})')
+                nl_list = ", ".join(not_loaded)
+                l_list = "\n**Not Loaded**: " + ", ".join(loaded)
+                await ctx.send(f'**Loaded**: {l_list}{nl_list}')
+            else:
+                self.load_extension("modules.{}".format(extension))
+                self.load_extension(extension)
+                await ctx.send('Module has been loaded.')
+                print('\n\nMODULE LOAD\n--[Module loaded, {}.py]--\n\n'.format(extension))
+        except Exception as error:
+            print('\n\nMODULE ERROR: {} was not loaded due to an error: \n-- [{}] --\n\n'.format(extension, error))
+            await ctx.send(f'Could not load module: `{error}`')
+
+    @commands.command(aliases=['un'], hidden=True)
+    @commands.is_owner()
+    async def unload(self, ctx, extension):
+        self.unload_extension("modules.{}".format(extension))
+        await ctx.send('Module has been loaded.')
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.NotOwner):
