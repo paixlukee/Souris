@@ -14,7 +14,7 @@ import sys
 import json
 import config
 
-extensions = ['modules.info']
+extensions = ['modules.info', 'modules.help']
 
 class Souris(commands.AutoShardedBot):
     def __init__(self):
