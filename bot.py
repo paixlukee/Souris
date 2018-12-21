@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
-
 import datetime
-
 import time
 import subprocess
 import traceback
@@ -10,12 +8,10 @@ import requests
 import random
 from random import choice as rnd
 from random import choice, randint
-
 import aiohttp
 import asyncio
 import sys
 import json
-
 import config
 
 class Souris(commands.AutoShardedBot):
@@ -66,17 +62,14 @@ class Souris(commands.AutoShardedBot):
 
     @commands.command()
     async def ping(self, ctx):
-        """Get the Ping"""
-        c = time.perf_counter()
-        await ctx.trigger_typing()
-        c2 = time.perf_counter()
-        await ctx.send("Pong! `{str(round((c2-c)*1000))}ms`")
+        """useless command"""
+        await ctx.send("Pong! Have a mice day!")
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.NotOwner):
             await ctx.send("You do not meet the correct permissions to run this command.")
         elif isinstance(error, commands.BadArgument):
-            await ctx.send(f"Incorrect Argument: `{error}`")
+            await ctx.send(f"Incorrect Argument(s): `{error}`")
         elif isinstance(error, commands.CommandOnCooldown):
             minutes, seconds = divmod(error.retry_after, 60)
             hours, minutes = divmod(minutes, 60)
