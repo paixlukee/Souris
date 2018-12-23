@@ -46,7 +46,18 @@ class Info:
         embed.set_thumbnail(url='https://media.discordapp.net/attachments/491039615185059850/525098215544979481/image0.jpg?width=440&height=434')
         await ctx.send(embed=embed)
         
-
+    @commands.command(aliases=['Tribe'])
+    async def tribe(self, ctx, *, name:str=None):
+        if not name:
+            await ctx.send('Please add the tribe name. Example: `s;tribe Streaxx Fan Club`')
+        
+        members = []
+        member_count = len(members)
+        embed = discord.Embed(colour=0x009d9d)
+        embed.add_field(name='Members', value=f'<:Mouse:526136041774514198> {member_count}')
+        embed.set_author(name=name.capitalize(), icon_url='https://vignette.wikia.nocookie.net/transformice/images/3/3a/Chatmane.png/revision/latest?cb=20160205093856')
+        embed.set_thumbnail(url='https://media.discordapp.net/attachments/491039615185059850/525098215544979481/image0.jpg?width=440&height=434')
+        await ctx.send(embed=embed)
 
 def setup(bot):
   bot.add_cog(Info(bot))
